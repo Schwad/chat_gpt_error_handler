@@ -61,9 +61,7 @@ module ChatGptErrorHandler
           end
           shortened_response_text = shortened_response_text.join("\n")
         rescue => e
-          puts "*" * 100
-          puts e.message
-          puts "*" * 100
+          # The formatting does not always work, so if it fails, just use the original response text
           shortened_response_text = response_text
         end
 
@@ -77,9 +75,9 @@ module ChatGptErrorHandler
     end
 
     def print_error_and_solution(error, response_text)
-      puts "\e[31;1mOriginal Error Message:\e[0m\n\n"
+      puts "\e[31;1mOriginal error message:\e[0m\n\n"
       puts error.message
-      puts "\n\n\e[34;1mGPT's Best Guess to Remedy the Error:\e[0m"
+      puts "\n\n\e[34;1mChatGPT's best guess to remedy the error:\e[0m"
       puts "\n"
       puts response_text
       puts "\n\n\e[34;1mFull stacktrace:\e[0m"
