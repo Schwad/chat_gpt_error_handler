@@ -1,28 +1,25 @@
 # ChatGptErrorHandler
-Short description and motivation.
+
+This gem pops a little helpful ChatGPT message before your error stacktrace.
+
+![example](images/example.png)
 
 ## Usage
-How to use my plugin.
 
-## Installation
 Add this line to your application's Gemfile:
 
 ```ruby
 gem "chat_gpt_error_handler"
 ```
 
-And then execute:
-```bash
-$ bundle
+Set your [OpenAI API Token](https://openai.com/product#made-for-developers) in an initializer:
+
+```ruby
+# config/initializers/chat_gpt_error_handler.rb
+ChatGptErrorHandler.openai_access_token = 'your_openai_access_token_here'
 ```
 
-Or install it yourself as:
-```bash
-$ gem install chat_gpt_error_handler
-```
-
-## Contributing
-Contribution directions go here.
+And you're off!
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
