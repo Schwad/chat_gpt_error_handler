@@ -67,7 +67,6 @@ module ChatGptErrorHandler
 
         print_error_and_solution(error, shortened_response_text.strip)
       rescue => gpt_error
-        require 'debug'; debugger
         puts "\e[31mAn error occurred while communicating with GPT:\e[0m"
         puts gpt_error.message
         puts gpt_error.backtrace
