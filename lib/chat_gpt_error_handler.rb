@@ -2,8 +2,11 @@ require "chat_gpt_error_handler/version"
 require "chat_gpt_error_handler/engine"
 
 module ChatGptErrorHandler
-    mattr_accessor :openai_access_token
+    mattr_accessor :openai_access_token, :enabled
 
   # Default value for the openai_access_token, used when not explicitly set by the user
   @@openai_access_token = nil
+
+  # Default value to allow opting-in
+  @@enabled = false
 end
