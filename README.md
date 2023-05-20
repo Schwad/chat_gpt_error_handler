@@ -12,11 +12,12 @@ Add this line to your application's Gemfile:
 gem "chat_gpt_error_handler"
 ```
 
-Set your [OpenAI API Token](https://openai.com/product#made-for-developers) in an initializer:
+Set your [OpenAI API Token](https://openai.com/product#made-for-developers) and enable the gem in an initializer:
 
 ```ruby
 # config/initializers/chat_gpt_error_handler.rb
 ChatGptErrorHandler.openai_access_token = 'your_openai_access_token_here'
+ChatGptErrorHandler.enabled = true
 ```
 
 And you're off!
