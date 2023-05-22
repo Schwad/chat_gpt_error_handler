@@ -5,8 +5,10 @@ module ChatGptErrorHandler
   class ErrorHandler
     def initialize(app)
       @app = app
-      OpenAI.configure do |config|
-        config.access_token = ChatGptErrorHandler.openai_access_token || ENV.fetch('OPENAI_ACCESS_TOKEN')
+      if ChatGptErrorHandler.enabled
+        OpenAI.configure do |config|
+          config.access_token = ChatGptErrorHandler.openai_access_token || ENV.fetch('OPENAI_ACCESS_TOKEN')
+        end
       end
     end
 
@@ -14,7 +16,7 @@ module ChatGptErrorHandler
       begin
         @app.call(env)
       rescue => error
-        send_to_gpt(error)
+        send_to_gpt(error) if ChatGptErrorHandler.enabled
         raise error
       end
     end
