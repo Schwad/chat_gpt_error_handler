@@ -7,4 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Add 'enabled' configuration setting
+- ...
+
+## [0.2.0]
+
+- Handles nil response from ChatGPT [PR](https://github.com/Schwad/chat_gpt_error_handler/pull/4)
+- Add 'enabled' configuration setting [PR](https://github.com/Schwad/chat_gpt_error_handler/pull/3)
