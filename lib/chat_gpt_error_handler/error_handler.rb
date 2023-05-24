@@ -45,6 +45,17 @@ module ChatGptErrorHandler
                 stop: nil
           }
         )
+
+        # Try a second time if the response is empty. Raise the second time
+        if response["choices"].nil?
+          if @retried.nil?
+            @retried = true
+            redo
+          else
+            raise "GPT returned an empty response to your error message."
+          end
+        end
+
         response_text = response["choices"].map { |c| c["text"].to_s }
 
         response_text = response_text.join("")
