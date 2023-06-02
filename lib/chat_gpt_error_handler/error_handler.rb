@@ -50,7 +50,7 @@ module ChatGptErrorHandler
         if response["choices"].nil?
           if @retried.nil?
             @retried = true
-            redo
+            retry
           else
             raise "GPT returned an empty response to your error message."
           end
