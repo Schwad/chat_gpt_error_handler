@@ -46,39 +46,48 @@ module ChatGptErrorHandler
           }
         )
 
+
         # Try a second time if the response is empty. Raise the second time
         if response["choices"].nil?
-          if @retried.nil?
-            @retried = true
-            retry
-          else
-            raise "GPT returned an empty response to your error message."
-          end
+          response = client.completions(
+            parameters: {
+              model: "text-davinci-002",
+                  prompt: prompt,
+                  n: 1,
+                  temperature: 0.85,
+                  max_tokens: 250,
+                  stop: nil
+            }
+          )
         end
 
-        response_text = response["choices"].map { |c| c["text"].to_s }
+        if true #response["choices"].nil?
+          print_error_and_solution(error, "ChatGPT returned an empty response to your error message. You may need to try again.")
+        else
+          response_text = response["choices"].map { |c| c["text"].to_s }
 
-        response_text = response_text.join("")
-        shortened_response_text = []
-        begin
-          # try to format the response text to be 75 characters per line
-          response_text.split(" ").reduce("") do |line, word|
-            if line.length + word.length > 75
-              shortened_response_text << line
-              line = word
-            elsif word == response_text.split(" ").last
-              shortened_response_text << [line + " " + word]
-            else
-              line += (" " + word)
+          response_text = response_text.join("")
+          shortened_response_text = []
+          begin
+            # try to format the response text to be 75 characters per line
+            response_text.split(" ").reduce("") do |line, word|
+              if line.length + word.length > 75
+                shortened_response_text << line
+                line = word
+              elsif word == response_text.split(" ").last
+                shortened_response_text << [line + " " + word]
+              else
+                line += (" " + word)
+              end
             end
+            shortened_response_text = shortened_response_text.join("\n")
+          rescue => e
+            # The formatting does not always work, so if it fails, just use the original response text
+            shortened_response_text = response_text
           end
-          shortened_response_text = shortened_response_text.join("\n")
-        rescue => e
-          # The formatting does not always work, so if it fails, just use the original response text
-          shortened_response_text = response_text
-        end
 
-        print_error_and_solution(error, shortened_response_text.strip)
+          print_error_and_solution(error, shortened_response_text.strip)
+        end
       rescue => gpt_error
         puts "\e[31mAn error occurred while communicating with GPT:\e[0m"
         puts gpt_error.message

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - ...
 
+## [0.2.1]
+- Bugfixes with `redo` keyword. More elegant handling of `nil` ChatGPT responses
+
 ## [0.2.0]
 
 - Handles nil response from ChatGPT [PR](https://github.com/Schwad/chat_gpt_error_handler/pull/4)
