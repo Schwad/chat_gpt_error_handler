@@ -46,19 +46,12 @@ module ChatGptErrorHandler
           }
         )
 
-        # Try a second time if the response is empty. Raise the second time
-        if response["choices"].nil?
-          if @retried.nil?
-            @retried = true
-            redo
-          else
-            raise "GPT returned an empty response to your error message."
-          end
+        response_text = if response["choices"].nil?
+          "GPT returned an empty response to your error message."
+        else
+          response["choices"].map { |c| c["text"].to_s }.join("")
         end
 
-        response_text = response["choices"].map { |c| c["text"].to_s }
-
-        response_text = response_text.join("")
         shortened_response_text = []
         begin
           # try to format the response text to be 75 characters per line
