@@ -34,22 +34,25 @@ module ChatGptErrorHandler
         fix the error. Clearly list possible reasons and a solution.
         Your answer will be displayed in the terminal for the user to see right
         before the backtrace of the error. Do NOT repeat the error message back verbatim.
-        Here is the error message: '#{error.message}'. Possible reason or solution?"
-        response = client.completions(
-          parameters: {
-            model: "text-davinci-002",
-                prompt: prompt,
-                n: 1,
-                temperature: 0.85,
-                max_tokens: 250,
-                stop: nil
-          }
-        )
+        I will give you the error and I want the possible reason or solution?"
+
+        query = error.message
+
+        response = client.chat(
+        parameters: {
+          model: "gpt-3.5-turbo-0613",
+          messages: [
+            { role: "system", content: prompt },
+            { role: "user", content: query },
+          ],
+          temperature: 0.85,
+        },
+      )
 
         response_text = if response["choices"].nil?
           "GPT returned an empty response to your error message."
         else
-          response["choices"].map { |c| c["text"].to_s }.join("")
+          response["choices"][0]["message"]["content"]
         end
 
         shortened_response_text = []

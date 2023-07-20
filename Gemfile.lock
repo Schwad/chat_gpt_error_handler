@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    chat_gpt_error_handler (0.1.0)
-      rails (>= 7.0.4.3)
+    chat_gpt_error_handler (0.2.2.1)
+      rails (~> 7.0, >= 7.0.4.3)
       ruby-openai
 
 GEM
